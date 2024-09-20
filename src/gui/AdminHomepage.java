@@ -8,6 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class AdminHomepage extends JFrame {
 
@@ -16,53 +22,51 @@ public class AdminHomepage extends JFrame {
     public AdminHomepage(Connection connection) {
         this.connection = connection;
         setTitle("Admin Homepage");
-        setSize(800, 600);
-        setLayout(new BorderLayout());
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.BLACK);
+        getContentPane().setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         // Navigation Panel
-        JPanel navigationPanel = new JPanel(new GridLayout(2, 2));
-        JButton btnOrderPage = new JButton("Order Page");
-        JButton btnShipmentPage = new JButton("Shipment Page");
-        JButton btnProductPage = new JButton("Product Page");
-        JButton btnUserManagement = new JButton("User Management");
+        JPanel navigationPanel = new JPanel(new GridBagLayout());
+        navigationPanel.setBackground(Color.BLACK);
+        navigationPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        btnOrderPage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new OrderPage(connection).setVisible(true);
-            }
-        });
+        String[] buttonLabels = {"Order Page", "Shipment Page", "Product Page", "User Management"};
+        ActionListener[] buttonListeners = {
+                e -> new OrderPage(connection).setVisible(true),
+                e -> new ShipmentPage(connection).setVisible(true),
+                e -> new ProductManagementPage().setVisible(true),
+                e -> new UserManagementPage().setVisible(true)
+        };
 
-        btnShipmentPage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ShipmentPage(connection).setVisible(true);
-            }
-        });
+        JButton[] buttons = new JButton[buttonLabels.length];
+        for (int i = 0; i < buttonLabels.length; i++) {
+            buttons[i] = createStyledButton(buttonLabels[i]);
+            buttons[i].addActionListener(buttonListeners[i]);
+            GridBagConstraints buttonGbc = new GridBagConstraints();
+            buttonGbc.gridx = 0;
+            buttonGbc.gridy = i;
+            buttonGbc.insets = new Insets(10, 10, 10, 10);
+            navigationPanel.add(buttons[i], buttonGbc);
+        }
 
-        btnProductPage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ProductManagementPage().setVisible(true);
-            }
-        });
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        getContentPane().add(navigationPanel, gbc);
 
-        btnUserManagement.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new UserManagementPage().setVisible(true);
-            }
-        });
+        // Logout button at the bottom right
+        JPanel buttonPanel = new JPanel(new BorderLayout());
+        buttonPanel.setBackground(Color.BLACK);
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        navigationPanel.add(btnOrderPage);
-        navigationPanel.add(btnShipmentPage);
-        navigationPanel.add(btnProductPage);
-        navigationPanel.add(btnUserManagement);
-
-        add(navigationPanel, BorderLayout.CENTER);
-
-        // Logout button
-        JButton btnLogout = new JButton("Logout");
+        JButton btnLogout = createStyledButton("Logout");
         btnLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,7 +78,23 @@ public class AdminHomepage extends JFrame {
                 }
             }
         });
-        add(btnLogout, BorderLayout.SOUTH);
+        buttonPanel.add(btnLogout, BorderLayout.SOUTH);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weighty = 0.0;
+        getContentPane().add(buttonPanel, gbc);
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 18)); // Adjust font size
+        button.setForeground(Color.WHITE);
+        button.setBackground(new Color(40, 40, 40)); // Use a blue color for buttons
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        button.setPreferredSize(new Dimension(200, 50)); // Make buttons a bit larger
+        return button;
     }
 
     public static void main(String[] args) {
