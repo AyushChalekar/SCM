@@ -1,6 +1,5 @@
-package com.wms.EMPLOYEES;
+package com.wms.ADMIN;
 
-import com.wms.ADMIN.AdminHomepage;
 import com.wms.models.UserData;
 import com.wms.utils.DatabaseConnection;
 
@@ -10,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
-import com.wms.ADMIN.LoginFrame;
 
 public class UsersPage extends JFrame {
     private Connection connection;
@@ -42,7 +40,7 @@ public class UsersPage extends JFrame {
         navigationPanel.setBackground(Color.WHITE); // White background for panel
         navigationPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 1.0;
         gbc.gridy = 1; // Move to the next row
 
@@ -97,12 +95,12 @@ public class UsersPage extends JFrame {
         gbc.gridy = 4;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.SOUTH;
-        JButton btnBack = createStyledButton("Back", "icons/back.png");
+        JButton btnBack = createStyledButton("Back ", "icons/back.png");
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose(); // Close the Users Page
-                new EmployeeHomepage(connection, userData).setVisible(true); // Show the Admin Homepage
+                new AdminHomepage(connection, userData).setVisible(true); // Show the Admin Homepage
             }
         });
         getContentPane().add(btnBack, gbc);
@@ -125,7 +123,7 @@ public class UsersPage extends JFrame {
         button.setBackground(new Color(255, 110, 110)); // Button color
         button.setFocusPainted(false);
         button.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Border color
-        button.setPreferredSize(new Dimension(250, 60));
+        button.setPreferredSize(new Dimension(250, 60)); // Button size
         try {
             ImageIcon icon = new ImageIcon(getClass().getResource("/" + iconPath));
             button.setIcon(icon);
@@ -133,8 +131,6 @@ public class UsersPage extends JFrame {
             System.err.println("Icon not found: " + iconPath);
             e.printStackTrace();
         }
-
-        // Button size
         return button;
     }
 
