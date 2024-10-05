@@ -1,16 +1,14 @@
-package com.wms.EMPLOYEES;
+package com.wms.ADMIN;
 
-import com.wms.ADMIN.AdminHomepage;
 import com.wms.models.UserData;
 import com.wms.utils.DatabaseConnection;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
-import com.wms.ADMIN.LoginFrame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ShipmentPage extends JFrame {
 
@@ -44,8 +42,13 @@ public class ShipmentPage extends JFrame {
         JButton btnCreateOrder = createStyledButton("Place Shipment", "icons/create_order.png");
         JButton btnTrackOrder = createStyledButton("Shipment Tracking", "icons/track_order.png");
 
-        btnCreateOrder.addActionListener(e -> new PlaceShipmentPage(connection,userData).setVisible(true));
+        btnCreateOrder.addActionListener(e -> new PlaceShipmentPage(connection, userData).setVisible(true));
         btnTrackOrder.addActionListener(e -> new ShipmentTrackingPage(connection).setVisible(true));
+
+        // Set the size of buttons here
+        Dimension buttonSize = new Dimension(350, 60);
+        btnCreateOrder.setPreferredSize(buttonSize);
+        btnTrackOrder.setPreferredSize(buttonSize);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -58,19 +61,19 @@ public class ShipmentPage extends JFrame {
         add(navigationPanel, BorderLayout.CENTER);
 
         // Back button at the bottom (BorderLayout.SOUTH)
-        JButton btnBack = createStyledButton("Back", "icons/back.png");
+        JButton btnBack = createStyledButton("Back to Admin Homepage", "icons/back_to_admin.png");
         btnBack.addActionListener(e -> {
             dispose(); // Close the Shipment Page
-            new EmployeeHomepage(connection, userData).setVisible(true); // Show the Admin Homepage
+            new AdminHomepage(connection, userData).setVisible(true); // Show the Admin Homepage
         });
+        btnBack.setPreferredSize(new Dimension(350, 60)); // Set preferred size for Back button
         add(btnBack, BorderLayout.SOUTH);
 
-        // Add margins and size to buttons
-        JButton[] buttons = {btnCreateOrder, btnTrackOrder, btnBack};
-        for (JButton button : buttons) {
-            button.setPreferredSize(new Dimension(250, 60)); // Set button size
-            button.setFont(new Font("Arial", Font.BOLD, 18)); // Font size for buttons
-        }
+        // Revalidate and repaint the layout to ensure sizes are applied
+        navigationPanel.revalidate();
+        navigationPanel.repaint();
+        revalidate();
+        repaint();
     }
 
     private JButton createStyledButton(String text, String iconPath) {
@@ -121,7 +124,7 @@ public class ShipmentPage extends JFrame {
                 throw new RuntimeException(e);
             }
             UserData userData = new UserData("john_doe", "Admin", 1, "email@example.com", "1234567890", "123 Main St", "First Name", "Last Name", "null");
-            new ShipmentPage(connection,userData).setVisible(true);
+            new ShipmentPage(connection, userData).setVisible(true);
         });
     }
 }
