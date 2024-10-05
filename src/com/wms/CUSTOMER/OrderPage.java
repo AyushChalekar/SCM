@@ -1,9 +1,7 @@
-package com.wms.CUSTOMER;
+package com.wms.ADMIN;
 
-import com.wms.ADMIN.AdminHomepage;
 import com.wms.models.UserData;
 import com.wms.utils.DatabaseConnection;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -41,8 +39,10 @@ public class OrderPage extends JFrame {
         navigationPanel.setBackground(Color.WHITE); // Changed to white
         navigationPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
+        // Adjust constraints to prevent stretching of buttons
+        gbc.fill = GridBagConstraints.NONE; // Do not fill horizontally
+        gbc.weightx = 0; // No horizontal stretching
+        gbc.anchor = GridBagConstraints.CENTER; // Center buttons
         gbc.gridy = 1; // Adjusted y position for navigation panel
 
         JButton btnCreateOrder = createStyledButton("Create Order", "icons/create_order.png");
@@ -53,7 +53,7 @@ public class OrderPage extends JFrame {
         btnCreateOrder.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OrderCreationPage(userData).setVisible(true);
+                new OrderCreationPage().setVisible(true);
             }
         });
 
@@ -67,14 +67,14 @@ public class OrderPage extends JFrame {
         btnOrderCanceled.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OrderCanceledPage(userData).setVisible(true);
+                new OrderCanceledPage().setVisible(true);
             }
         });
 
         btnOrderDelivered.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new OrderDeliveredPage(userData).setVisible(true);
+                new OrderDeliveredPage().setVisible(true);
             }
         });
 
@@ -98,22 +98,25 @@ public class OrderPage extends JFrame {
         gbc.gridy = 4;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.SOUTH;
-        JButton btnBack = createStyledButton("Back", "icons/back.png");
+        JButton btnBack = createStyledButton("Back to Admin Homepage", "icons/back_to_admin.png");
         btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose(); // Close the Order Page
-                new CustomerHomepage(connection, userData).setVisible(true); // Show Admin Homepage with UserData
+                new AdminHomepage(connection, userData).setVisible(true); // Show Admin Homepage with UserData
             }
         });
         add(btnBack, gbc);
 
-        // Add margins to the buttons
-        JButton[] buttons = {btnCreateOrder, btnTrackOrder, btnOrderDelivered, btnOrderCanceled, btnBack};
+        // Add margins to the buttons and set the preferred size
+        JButton[] buttons = {btnCreateOrder, btnTrackOrder, btnOrderDelivered, btnOrderCanceled};
         for (JButton button : buttons) {
-            button.setPreferredSize(new Dimension(250, 60)); // Set button size
+            button.setPreferredSize(new Dimension(200, 60)); // Set button size to 200px width
             button.setFont(new Font("Arial", Font.BOLD, 18)); // Font size for buttons
         }
+
+        // Increase "Back to Admin Homepage" button size
+        btnBack.setPreferredSize(new Dimension(350, 60)); // Increased to 300px width
     }
 
     private JButton createStyledButton(String text, String iconPath) {
@@ -124,14 +127,6 @@ public class OrderPage extends JFrame {
         button.setFont(new Font("Arial", Font.BOLD, 24)); // Large font size
         button.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2)); // Border
         button.setFocusPainted(false);
-
-        try {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/" + iconPath));
-            button.setIcon(icon);
-        } catch (Exception e) {
-            System.err.println("Icon not found: " + iconPath);
-            e.printStackTrace();
-        }
         return button;
     }
 
