@@ -1,4 +1,4 @@
-package com.wms.EMPLOYEES;
+package com.wms.ADMIN;
 
 import com.wms.utils.DatabaseConnection;
 
@@ -6,13 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.wms.ADMIN.LoginFrame;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class OrderTrackingPage extends JFrame {
@@ -56,7 +56,9 @@ public class OrderTrackingPage extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
         formPanel.add(trackShipmentButton, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         add(formPanel, BorderLayout.NORTH);
 
