@@ -1,15 +1,11 @@
-package com.wms.EMPLOYEES;
+package com.wms.ADMIN;
 
 import com.wms.utils.DatabaseConnection;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import com.wms.ADMIN.LoginFrame;
+import java.awt.event.*;
+import java.sql.*;
 
 public class DeliveryUpdatePage extends JFrame {
     private JTextField trackingIdField;
@@ -82,8 +78,9 @@ public class DeliveryUpdatePage extends JFrame {
         // Update Status button
         updateStatusButton = createStyledButton("Update Status", "icons/update.png");
         gbc.gridy = 4;
+        gbc.fill = GridBagConstraints.NONE; // Prevent resizing
+        gbc.weightx = 3; // Do not allow horizontal stretching
         formPanel.add(updateStatusButton, gbc);
-
         add(formPanel, BorderLayout.NORTH);
 
         // Delivery updates area setup
@@ -125,7 +122,7 @@ public class DeliveryUpdatePage extends JFrame {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setIcon(new ImageIcon(iconPath));
-        button.setPreferredSize(new Dimension(200, 50)); // Button size
+        button.setPreferredSize(new Dimension(200, 40));
 
         button.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(255, 110, 110), 2),
