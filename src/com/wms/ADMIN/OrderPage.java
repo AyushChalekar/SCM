@@ -39,8 +39,10 @@ public class OrderPage extends JFrame {
         navigationPanel.setBackground(Color.WHITE); // Changed to white
         navigationPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
+        // Adjust constraints to prevent stretching of buttons
+        gbc.fill = GridBagConstraints.NONE; // Do not fill horizontally
+        gbc.weightx = 0; // No horizontal stretching
+        gbc.anchor = GridBagConstraints.CENTER; // Center buttons
         gbc.gridy = 1; // Adjusted y position for navigation panel
 
         JButton btnCreateOrder = createStyledButton("Create Order", "icons/create_order.png");
@@ -106,12 +108,15 @@ public class OrderPage extends JFrame {
         });
         add(btnBack, gbc);
 
-        // Add margins to the buttons
-        JButton[] buttons = {btnCreateOrder, btnTrackOrder, btnOrderDelivered, btnOrderCanceled, btnBack};
+        // Add margins to the buttons and set the preferred size
+        JButton[] buttons = {btnCreateOrder, btnTrackOrder, btnOrderDelivered, btnOrderCanceled};
         for (JButton button : buttons) {
-            button.setPreferredSize(new Dimension(250, 60)); // Set button size
+            button.setPreferredSize(new Dimension(200, 60)); // Set button size to 200px width
             button.setFont(new Font("Arial", Font.BOLD, 18)); // Font size for buttons
         }
+
+        // Increase "Back to Admin Homepage" button size
+        btnBack.setPreferredSize(new Dimension(350, 60)); // Increased to 300px width
     }
 
     private JButton createStyledButton(String text, String iconPath) {
@@ -127,7 +132,7 @@ public class OrderPage extends JFrame {
 
     public static void main(String[] args) {
         Connection connection = null;
-            UserData userData = new UserData("john_doe", "Admin", 1, "email@example.com", "1234567890", "123 Main St", "First Name", "Last Name", "null");
+        UserData userData = new UserData("john_doe", "Admin", 1, "email@example.com", "1234567890", "123 Main St", "First Name", "Last Name", "null");
         try {
             connection = DatabaseConnection.getConnection();
             // Initialize UserData here if needed
