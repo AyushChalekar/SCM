@@ -40,7 +40,7 @@ public class UsersPage extends JFrame {
         navigationPanel.setBackground(Color.WHITE); // White background for panel
         navigationPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.NONE;
         gbc.weightx = 1.0;
         gbc.gridy = 1; // Move to the next row
 
