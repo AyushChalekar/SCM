@@ -52,7 +52,9 @@ public class ShipmentTrackingPage extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
         formPanel.add(trackShipmentButton, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         add(formPanel, BorderLayout.NORTH);
 
