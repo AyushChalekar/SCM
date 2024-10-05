@@ -38,8 +38,8 @@ public class SignUpFrame extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                ImageIcon icon = new ImageIcon(getClass().getResource("/logo.png"));  // Fixed missing parenthesis
-                Image image = icon.getImage();  // Fixed incorrect variable name
+                ImageIcon icon = new ImageIcon(getClass().getResource("/logo.png"));
+                Image image = icon.getImage();
 
                 int width = getWidth();
                 int height = getHeight();
@@ -65,14 +65,14 @@ public class SignUpFrame extends JFrame {
         imagePanel.setPreferredSize(new Dimension(400, getHeight())); // Ensuring the panel has enough width
         imagePanel.setBackground(new Color(255, 110, 110)); // Set left panel color to orange
 
-        add(imagePanel, BorderLayout.WEST);
         // Right panel for signup form
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.WHITE);
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(20, 20, 20, 20);
+        c.anchor = GridBagConstraints.WEST; // Align components to the left
 
-        JLabel titleLabel = new JLabel("Smart Cargo Manager - Sign Up");
+        JLabel titleLabel = new JLabel("Sign Up - Warehouse Management System");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 32));
         titleLabel.setForeground(new Color(255, 110, 110));
         c.gridx = 0;
@@ -80,86 +80,86 @@ public class SignUpFrame extends JFrame {
         c.gridwidth = 2;
         panel.add(titleLabel, c);
 
+        // Dropdown for role selection (Combo Box) placed right below the title
+        JLabel roleLabel = new JLabel("Role:");
+        roleLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        roleLabel.setForeground(Color.BLACK);
+        c.gridx = 0;
+        c.gridy = 1;
+        panel.add(roleLabel, c);
+
+        String[] roles = {"Customer", "Delivery Partner"};
+        roleComboBox = new JComboBox<>(roles);
+        roleComboBox.setFont(new Font("Arial", Font.PLAIN, 20));
+        c.gridx = 1;
+        c.gridy = 1;
+        panel.add(roleComboBox, c);
+
         JLabel userLabel = new JLabel("Username:");
         userLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         userLabel.setForeground(Color.BLACK);
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         c.gridwidth = 1;
         panel.add(userLabel, c);
 
         usernameField = new JTextField(20);
         usernameField.setFont(new Font("Arial", Font.PLAIN, 20));
         c.gridx = 1;
-        c.gridy = 1;
+        c.gridy = 2;
         panel.add(usernameField, c);
 
         JLabel passLabel = new JLabel("Password:");
         passLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         passLabel.setForeground(Color.BLACK);
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 3;
         panel.add(passLabel, c);
 
         passwordField = new JPasswordField(20);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 20));
         c.gridx = 1;
-        c.gridy = 2;
+        c.gridy = 3;
         panel.add(passwordField, c);
 
         JLabel emailLabel = new JLabel("Email:");
         emailLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         emailLabel.setForeground(Color.BLACK);
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         panel.add(emailLabel, c);
 
         emailField = new JTextField(20);
         emailField.setFont(new Font("Arial", Font.PLAIN, 20));
         c.gridx = 1;
-        c.gridy = 3;
+        c.gridy = 4;
         panel.add(emailField, c);
 
         JLabel phoneLabel = new JLabel("Phone:");
         phoneLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         phoneLabel.setForeground(Color.BLACK);
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 5;
         panel.add(phoneLabel, c);
 
         phoneField = new JTextField(20);
         phoneField.setFont(new Font("Arial", Font.PLAIN, 20));
         c.gridx = 1;
-        c.gridy = 4;
+        c.gridy = 5;
         panel.add(phoneField, c);
 
         JLabel addressLabel = new JLabel("Address:");
         addressLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         addressLabel.setForeground(Color.BLACK);
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 6;
         panel.add(addressLabel, c);
 
         addressField = new JTextField(20);
         addressField.setFont(new Font("Arial", Font.PLAIN, 20));
         c.gridx = 1;
-        c.gridy = 5;
+        c.gridy = 6;
         panel.add(addressField, c);
-
-        JLabel roleLabel = new JLabel("Role:");
-        roleLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        roleLabel.setForeground(Color.BLACK);
-        c.gridx = 0;
-        c.gridy = 6;
-        panel.add(roleLabel, c);
-
-        // Dropdown for role selection
-        String[] roles = {"Customer", "Delivery Partner"};
-        roleComboBox = new JComboBox<>(roles);
-        roleComboBox.setFont(new Font("Arial", Font.PLAIN, 20));
-        c.gridx = 1;
-        c.gridy = 6;
-        panel.add(roleComboBox, c);
 
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.setFont(new Font("Arial", Font.BOLD, 20));
